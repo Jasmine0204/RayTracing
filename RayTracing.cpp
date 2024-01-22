@@ -18,10 +18,11 @@ int main() {
 	auto material_left = make_shared<dielectric>(1.5);
 	auto material_right = make_shared<metal>(color(0.62, 1, 1), 0.1);
 
+
 	world.add(make_shared<sphere>(point3(0.0, -100.5, -1.0), 100.0, material_ground));
-	world.add(make_shared<sphere>(point3(0.0, 0.0, -1.0), 0.5, material_center));
+	world.add(make_shared<sphere>(point3(0.0, 0.0, -1.0), point3(0.0, 0.3, -1.0), 0.5, material_center));
 	world.add(make_shared<sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_left));
-	world.add(make_shared<sphere>(point3(-1.0, 0.0, -1.0), -0.4, material_left));
+	world.add(make_shared<sphere>(point3(-1.0, 0.0, -1.0),  -0.4, material_left));
 	world.add(make_shared<sphere>(point3(1.0, 0.0, -1.0), 0.5, material_right));
 
 	camera cam;
@@ -35,7 +36,7 @@ int main() {
 	cam.lookat = point3(0, 0, -1);
 	cam.vup = vec3(0, 1, 0);
 
-	cam.defocus_angle = 6.0;
+	cam.defocus_angle = 0;
 	cam.focus_dist = 3.4;
 
 	cam.render(world);

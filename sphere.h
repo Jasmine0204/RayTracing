@@ -10,7 +10,8 @@ public:
 	sphere(point3 _center1, point3 _center2, double _radius, shared_ptr<material> _material) : center1(_center1), radius(_radius), mat(_material), isMoving(true) { center_vec = _center2 - _center1; }
 
 	bool hit(const ray& r, interval ray_t, hit_record& rec) const override {
-		vec3 oc = r.origin() - center1;
+		point3 center = isMoving ? sphere_center(r.time()) : center1;
+		vec3 oc = r.origin() - center;
 		auto a = r.direction().length_squared();
 		auto half_b = dot(oc, r.direction());
 		auto c = oc.length_squared() - (radius * radius);
@@ -44,9 +45,9 @@ private:
 	double radius;
 	shared_ptr<material> mat;
 	bool isMoving;
-	point3 center_vec;
+	vec3 center_vec;
 
-	point3 center(double time) const{
+	point3 sphere_center(double time) const{
 		return center1 + time * center_vec;
 	}
 };
